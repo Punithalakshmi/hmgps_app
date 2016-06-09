@@ -666,13 +666,16 @@ class Service extends REST_Controller
         $ins_data['accuracy']= $this->get('accuracy');
 
         if($result > 0) {
+           // $ins_data['date_updated'] = strtotime(date('Y-m-d H:i:s'));
+          //  $update = $this->user_position_model->update($ins_data,array('user_id' => $user_id));
+            
             $check_lat_lon = $this->user_position_model->check_unique(array("user_id" => $user_id));
             
             $latt = $this->get('lat');
             $lon  = $this->get('lon');
             
             //Check if lat lon already 0 or greater than 0
-            if(($latt > 0 && $lon > 0) && (($check_lat_lon['lat'] > 0 && $check_lat_lon['lon'] > 0) || ($check_lat_lon['lat'] == 0 && $check_lat_lon['lon'] == 0))) {
+            if(($latt != 0 && $lon != 0) && (($check_lat_lon['lat'] != 0 && $check_lat_lon['lon'] != 0) || ($check_lat_lon['lat'] == 0 && $check_lat_lon['lon'] == 0))) {
                 $ins_data['date_updated'] = strtotime(date('Y-m-d H:i:s'));
                 $update = $this->user_position_model->update($ins_data,array('user_id' => $user_id));
             }
@@ -681,7 +684,6 @@ class Service extends REST_Controller
             $up_data = array();
             $up_data['last_seen_time'] = date("Y-m-d H:i:s");
             $this->user_groups_model->update($up_data,array("user_id" => $user_id,"status" => 1));
-            
             
         }
         else
