@@ -21,16 +21,18 @@ function generate_promo()
 }
 
 function assign_user(id){
-    $("#assign_user_id").val(id);
+   
+    $("#tab4primary #assign_user_id").val(id);
     
     $.ajax({
           type: "POST",
-          url: base_url+"admin/user/promos",
+          url: base_url+"admin/user/promos/"+id,
           data:{user_id:id},
           dataType:'json',
           success: function(res){
             var outpt = res.output;
-            $(".modal-body #promos").html(outpt);
+            //$(".modal-body #promos").html(outpt);
+            $("#tab4primary").html(outpt);
           },
           error: function(e) {
          	console.log(e.message);
@@ -51,7 +53,8 @@ function assign_promo()
           dataType:'json',
           success: function(res){
             if(res.output){
-                $("#uiModal .modal-body #promos").html(res.output);
+                //$("#uiModal .modal-body #promos").html(res.output);
+                $("#tab4primary").html(res.output);
             }
             else
             {
@@ -122,4 +125,43 @@ function DeleteCheckedRow(e,cls,url,divid='')
 
 function notification(id){
     $("#notify_user_id").val(id);
+}
+
+
+function res_password(user_id)
+{
+    var pass = "", cpass = "";
+    pass  = $("#password").val();
+    cpass = $("#confirm_password").val();
+    
+    if(pass == '') {
+        alert("Password should not be empty!");
+        return false;
+    }
+    else if(cpass == '')
+    {
+        alert("Confrim Password should not be empty!");
+        return false;
+    }
+    else if(pass != cpass)
+    {
+        alert("Password couldn't match!");
+        return false;
+    }
+    
+    $.ajax({
+          type: "POST",
+          url: base_url+"admin/user/reset_password/"+user_id,
+          data:{password:pass,confirm_password:cpass},
+          dataType:'json',
+          success: function(res){
+            if(res.status == 'success') {
+                $(".pass_success").html("Password Successfully reset.");
+            }
+          },
+          error: function(e) {
+            	console.log(e.message);
+          }
+        });
+    
 }

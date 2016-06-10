@@ -13,14 +13,16 @@
                             <li class="active"><a href="#tab1primary" data-toggle="tab">View User</a></li>
                             <li><a href="#tab2primary" data-toggle="tab">HMGPS Account</a></li>
                             <li><a href="#tab3primary" data-toggle="tab">Contacts</a></li>
-                            <li><a href="#tab4primary" data-toggle="tab">My Promo</a></li>
+                            <li><a href="#tab4primary" onclick="assign_user(<?php echo $this->uri->segment(4);?>)" data-toggle="tab">My Promo</a></li>
                             <li><a href="#tab5primary" data-toggle="tab">Payment</a></li>
+                            <li><a href="#tab6primary" data-toggle="tab">Reset Password</a></li>
                         </ul>
                 </div>
                 <div class="panel-body">
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="tab1primary">
                                <div class="col-lg-11 user-detailed" style="display:inline-block">
+                               <?php //echo "<pre>"; print_r($channels['channels']); ?>
                                  <div class="form-control">
                                       <label>Default ID</label><span>:</span>
                                       <?php echo (!empty($form_data['default_id']))?$form_data['default_id']:""; ?>
@@ -70,6 +72,7 @@
                                             <input type="radio" name="update_user_status" style="margin-left: 15px;" value="1" <?php echo ($form_data['user_status'] == 1)?'checked=checked':"";?> />Active
                                             <input type="radio" name="update_user_status" value="2" <?php echo ($form_data['user_status'] == 2)?'checked=checked':"";?> />In Active
                                             <input type="radio" type="" name="update_user_status" value="3" <?php echo ($form_data['user_status'] == 3)?'checked=checked':"";?> />Flag
+                                            <input type="radio" type="" name="update_user_status" value="4" <?php echo ($form_data['user_status'] == 4)?'checked=checked':"";?> />Blocked By
                                             <input type="submit" type="" name="user_status" class="btn btn-primary" style="margin-left: 20px; margin-bottom: 5px;" value="UPDATE" />
                                           </form>
                                         </div>
@@ -82,10 +85,25 @@
                             Contacts
                         </div>
                         <div class="tab-pane fade" id="tab4primary">
+                            
                             My Promo
                         </div>
                         <div class="tab-pane fade" id="tab5primary">
                             Payment
+                        </div>
+                         <div class="tab-pane fade" id="tab6primary">
+                            <div class="row">
+                              <form name="reset_password" method="post">
+                                    <span class="pass_success" style="color: #218c92; font-weight:bold;"></span>
+                                    <br />
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" id="password" style="width: 200px !important;" name="password" />
+                                     <br />
+                                     <label>Confirm Password</label>
+                                      <input type="password" class="form-control" id="confirm_password" style="width: 200px !important;" name="confirm_password" />
+                                    <br />
+                                <input type="button" onclick="res_password(<?php echo $this->uri->segment(4);?>);" name="user_update" class="btn btn-primary"  value="SAVE" />
+                              </form>
                         </div>
                     </div>
                 </div>

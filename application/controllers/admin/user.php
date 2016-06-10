@@ -3,12 +3,22 @@ safe_include("controllers/admin/admin_controller.php");
 class User extends Admin_controller {
     
     protected $_user_validation_rules = array(array('field' => 'update_user_status', 'label' => 'Status', 'rules' => 'trim|required'));
+    protected $api_url = 'http://localhost/hmgps_app/service/';
+	protected $service_param = array('X-APP-KEY'=>'myGPs~@!');
     
     function __construct()
     {
         
          parent::__construct();
+         $this->load->library('Rest');
+         $this->rest->initialize(
+			array('server' => $this->api_url,
+		        'http_auth' => 'basic'
+	    	)
+		);
+        
          $this->load->model(array('promo_model','user_model','user_groups_model','user_position_model'));
+         
     }
     
     function index()
@@ -69,7 +79,15 @@ class User extends Admin_controller {
         
         if(is_logged_in()) {
             
+            
+            
             $edit_id = (isset($_POST['edit_id']))?$_POST['edit_id']:$edit_id;
+            
+            $this->service_param['user_id'] = $edit_id;
+            
+            $channels = $this->rest->get('manage_channel_ids', $this->service_param, 'json');
+            
+            $this->data['channels'] = (array)$channels;	
             
             $this->form_validation->set_rules($this->_user_validation_rules);
        
@@ -121,6 +139,7 @@ class User extends Admin_controller {
                 $this->data['form_data'] = array("default_id" => "","phonenumber" => "");
             }
             
+            
             $this->layout->view('admin/user/view',$this->data);    
         }
         else
@@ -151,10 +170,8 @@ class User extends Admin_controller {
         $promo_cnt = $promo_count['cnt'];
         
             if($used_promo_count < $number_of_user_to_use) {
-                $this->db->query("insert into user_promos set user_id='".$user_id."', promo_id='".$promo_id."',assign_date='".date("Y-m-d")."'");
-                
+                $this->db->query("insert into user_promos set user_id='".$user_id."', promo_id='".$promo_id."',assign_date='".date("Y-m-d")."'"); 
                 $this->db->query("update user set last_assigned_promo='".$promo_id."', participant_count='".$number_of_time_to_use['participant_count']."' where id='".$user_id."'");
-                
                 $this->promos($user_id);
             }
             else
@@ -172,6 +189,9 @@ class User extends Admin_controller {
         $user_id = (isset($_POST['user_id']))?$_POST['user_id']:$user_id;
         
         $this->data['assignedpromos'] = $this->promo_model->get_user_assigned_promos($user_id);
+        
+        //all promos
+        $this->data['promos']  = $this->promo_model->get_all_promos();
         
         $output  = $this->load->view("admin/user/promos",$this->data,TRUE);
         
@@ -213,5 +233,16 @@ class User extends Admin_controller {
         if($this->input->is_ajax_request())
             return    $this->_ajax_output(array('status' => 'success' ,'output' => $output), TRUE);
         
+    }
+    
+    //reset password
+    function reset_password($user_id = '')
+    {
+        $password  = $this->input->post('password');
+        
+        $this->db->query("update user set password='".md5($password)."' where id='".$user_id."'");
+        
+         if($this->input->is_ajax_request())
+            return    $this->_ajax_output(array('status' => 'success' ,'output' => $output), TRUE);
     }
 }   
