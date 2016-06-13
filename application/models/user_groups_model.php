@@ -55,9 +55,16 @@ class User_Groups_Model extends CI_Model {
         return $this->db->get()->result_array();
     }
     
-    function get_groups_member_count($where)
+    function get_user_channels($user_id)
     {
-        
+        $this->db->select("g.user_id as guser,ug.user_id as uguser,g.join_key as jkey,g.description,g.type,g.location_type,g.id as group_id");
+        $this->db->join("groups g","g.id=ug.group_id");
+        $this->db->where("ug.user_id",$user_id);
+        return $this->db->get("user_groups ug")->result_array();
+    }
+    
+    function get_groups_member_count($where)
+    {  
         return $this->db->get_where($this->_table,$where)->num_rows();
     }
     

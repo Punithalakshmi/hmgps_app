@@ -76,6 +76,35 @@
                                             <input type="submit" type="" name="user_status" class="btn btn-primary" style="margin-left: 20px; margin-bottom: 5px;" value="UPDATE" />
                                           </form>
                                         </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-lg-12" id="user_channels">
+                                        <h5><b>CHANNELS</b></h5>
+                                        <table class="table user-list table-hover" style="height:10px !important;">
+                                        <thead>
+                                            <th>CHANNEL NAME</th>
+                                            <th>CHANNEL TYPE</th>
+                                            <th>MEMBER TYPE</th>
+                                            <th>ACTION</th>
+                                        </thead>
+                                        <tbody> 
+                                            <?php if(count($channels) > 0){
+                                                 foreach($channels as $ckey => $cvalue){ ?>
+                                                 <tr>
+                                                    <td><?php echo $cvalue['jkey'];?></td>
+                                                    <td><?php echo $cvalue['type'];?></td>
+                                                    <td><?php if($cvalue['guser'] == $cvalue['uguser']) {echo "Owner";}else{echo "Joined User";} ?></td>
+                                                    <td><a onclick="delete_group_user(<?php echo $cvalue['uguser'];?>,<?php echo $cvalue['group_id'];?>);"><img src="<?php echo site_url();?>assets/admin/images/delete.png" width="20" height="20" /></a></td>
+                                                 </tr>
+                                                    
+                                            <?php } } else { ?>
+                                                <tr>
+                                                    <td colspan="3"> No Channels Found.</td>
+                                                </tr>
+                                            <?php } ?>
+                                           
+                                        </tbody>
+                                        </table>
                                     </div>      
                         </div>
                         <div class="tab-pane fade" id="tab2primary">
@@ -84,8 +113,7 @@
                         <div class="tab-pane fade" id="tab3primary">
                             Contacts
                         </div>
-                        <div class="tab-pane fade" id="tab4primary">
-                            
+                        <div class="tab-pane fade" id="tab4primary">  
                             My Promo
                         </div>
                         <div class="tab-pane fade" id="tab5primary">
@@ -104,8 +132,9 @@
                                     <br />
                                 <input type="button" onclick="res_password(<?php echo $this->uri->segment(4);?>);" name="user_update" class="btn btn-primary"  value="SAVE" />
                               </form>
-                        </div>
-                    </div>
+                          </div>
+                      </div>
+                      
                 </div>
             </div>
         </div>

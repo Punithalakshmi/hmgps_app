@@ -165,3 +165,22 @@ function res_password(user_id)
         });
     
 }
+
+function delete_group_user(user_id,group_id)
+{
+    $.ajax({
+          type: "POST",
+          url: base_url+"admin/user/delete_group_user",
+          data:{user_id:user_id,group_id:group_id},
+          dataType:'json',
+          success: function(res){
+            if(res.status == 'success') {
+               alert("Deleted Successfully");
+               location.reload();
+            }
+          },
+          error: function(e) {
+            	console.log(e.message);
+          }
+        });
+}

@@ -2162,12 +2162,10 @@ class Service extends REST_Controller
    function update_notification_view_get($msg_id)
    {
         $msg_id  = $this->get('msg_id');
-        
 
         $res = $this->user_model->update('user_notifications',array('is_viewed'=>1),array('id'=>$msg_id));
         
         return $this->response(array('status' => 'success', 'msg' => 'View status updated'), 200);
-
    }
 
    function update_user_block_status_get()

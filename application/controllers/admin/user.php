@@ -79,15 +79,13 @@ class User extends Admin_controller {
         
         if(is_logged_in()) {
             
-            
-            
             $edit_id = (isset($_POST['edit_id']))?$_POST['edit_id']:$edit_id;
             
             $this->service_param['user_id'] = $edit_id;
             
-            $channels = $this->rest->get('manage_channel_ids', $this->service_param, 'json');
+            $this->data['channels'] = $this->user_groups_model->get_user_channels($edit_id);
             
-            $this->data['channels'] = (array)$channels;	
+           // echo $this->db->last_query(); exit;	
             
             $this->form_validation->set_rules($this->_user_validation_rules);
        
@@ -244,5 +242,17 @@ class User extends Admin_controller {
         
          if($this->input->is_ajax_request())
             return    $this->_ajax_output(array('status' => 'success' ,'output' => $output), TRUE);
+    }
+    
+    //delete group user
+    function delete_group_user($user_id,$group_id)
+    {
+        $user_id  = $this->input->post('user_id');
+        $group_id = $this->input->post('group_id');
+        
+        $this->user_groups_model->delete(array("user_id" => $user_id, "group_id" => $group_id));
+        
+        if($this->input->is_ajax_request())
+            return    $this->_ajax_output(array('status' => 'success'), TRUE);
     }
 }   
