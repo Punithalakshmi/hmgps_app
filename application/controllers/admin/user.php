@@ -220,11 +220,9 @@ class User extends Admin_controller {
     function group_participant_lists()
     {
         //user user id
-        $user_id   = $_POST['user_id'];
+        $group_id   = $this->input->post('group_id');
         
-        $user_data = $this->user_model->check_unique(array('id' => $user_id));
-        
-        $this->data['participants'] = $this->user_groups_model->get_participant_lists($user_data['default_id']);
+        $this->data['participants'] = $this->user_groups_model->get_participant_lists($group_id);
         
         $output  = $this->load->view("admin/user/participants",$this->data,TRUE);
         
@@ -249,8 +247,14 @@ class User extends Admin_controller {
     {
         $user_id  = $this->input->post('user_id');
         $group_id = $this->input->post('group_id');
+        $usertype = $this->input->post('usertype');
         
-        $this->user_groups_model->delete(array("user_id" => $user_id, "group_id" => $group_id));
+        if($usertype == 'group_user') {
+         $this->user_groups_model->delete(array("user_id" => $user_id, "group_id" => $group_id));
+        }
+        if($usertype == 'owner') {
+          $this->group_model->delete(array("user_id" => $user_id, "id" => $group_id));  
+        }
         
         if($this->input->is_ajax_request())
             return    $this->_ajax_output(array('status' => 'success'), TRUE);

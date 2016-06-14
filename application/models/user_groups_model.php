@@ -127,12 +127,12 @@ class User_Groups_Model extends CI_Model {
     }
     
     //get participant lists
-    function get_participant_lists($default_id)
+    function get_participant_lists($group_id)
     {
         $this->db->select("u.*");
         $this->db->join("user_groups ug","ug.user_id=u.id");
         $this->db->join("groups g","g.id=ug.group_id");
-        $this->db->where("g.join_key",$default_id);
+        $this->db->where("g.id",$group_id);
         return $this->db->get('user u')->result_array();
     }
     

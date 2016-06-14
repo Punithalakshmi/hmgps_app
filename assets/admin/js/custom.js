@@ -67,23 +67,20 @@ function assign_promo()
         });
 }
 
-function get_participants_lists(user_id)
+function get_participants_lists(group_id)
 {
     $.ajax({
           type: "POST",
           url: base_url+"admin/user/group_participant_lists",
-          data:{user_id:user_id},
+          data:{group_id:group_id},
           dataType:'json',
           success: function(res){
-            //alert(res);
-            $("#participant_lists .modal-body #group_participants_lists").html(res.output);
-           
+            $("#participant_lists .modal-body #group_participants_lists").html(res.output); 
           },
           error: function(e) {
             	console.log(e.message);
           }
         });
-    
 }
 
 
@@ -162,16 +159,15 @@ function res_password(user_id)
           error: function(e) {
             	console.log(e.message);
           }
-        });
-    
+        });   
 }
 
-function delete_group_user(user_id,group_id)
+function delete_group_user(user_id,group_id,usertype)
 {
     $.ajax({
           type: "POST",
           url: base_url+"admin/user/delete_group_user",
-          data:{user_id:user_id,group_id:group_id},
+          data:{user_id:user_id,group_id:group_id,usertype:usertype},
           dataType:'json',
           success: function(res){
             if(res.status == 'success') {

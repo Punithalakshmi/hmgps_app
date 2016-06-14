@@ -89,14 +89,19 @@
                                         </thead>
                                         <tbody> 
                                             <?php if(count($channels) > 0){
-                                                 foreach($channels as $ckey => $cvalue){ ?>
+                                                 foreach($channels as $ckey => $cvalue){ 
+                                                   $usertype = ($cvalue['guser']==$cvalue['uguser'])?'owner':'group_user'; 
+                                              ?>
                                                  <tr>
                                                     <td><?php echo $cvalue['jkey'];?></td>
                                                     <td><?php echo $cvalue['type'];?></td>
                                                     <td><?php if($cvalue['guser'] == $cvalue['uguser']) {echo "Owner";}else{echo "Joined User";} ?></td>
-                                                    <td><a onclick="delete_group_user(<?php echo $cvalue['uguser'];?>,<?php echo $cvalue['group_id'];?>);"><img src="<?php echo site_url();?>assets/admin/images/delete.png" width="20" height="20" /></a></td>
-                                                 </tr>
-                                                    
+                                                    <td><a onclick="delete_group_user(<?php echo $cvalue['uguser'];?>,<?php echo $cvalue['group_id'];?>,'<?php echo $usertype; ?>');"><img src="<?php echo site_url();?>assets/admin/images/delete.png" width="20" height="20" /></a>
+                                                    <button class="btn btn-info btn-action" data-toggle="modal" data-target="#participant_lists" onclick="get_participants_lists(<?php echo $cvalue['group_id'];?>)"> 
+                                                          <img src="<?php echo base_url();?>assets/admin/images/participants.png" class="img-responsive m-menu" alt="participants" /> 
+                                                        </button>
+                                                    </td>
+                                                 </tr>  
                                             <?php } } else { ?>
                                                 <tr>
                                                     <td colspan="3"> No Channels Found.</td>
@@ -141,8 +146,34 @@
 	</div>
 </div>
 <br/>
+</div>
 
-  </div>
+<div class="modal fade" id="participant_lists" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="H3">Participants Lists</h4>
+            </div>
+            <div class="modal-body">
+          
+             <div class="clearfix" style="margin-top: 20px;"></div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="group_participants_lists">
+                            
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+
     
         <!--
 <div class="row">
