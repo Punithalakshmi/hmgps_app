@@ -17,7 +17,7 @@ class User extends Admin_controller {
 	    	)
 		);
         
-         $this->load->model(array('promo_model','user_model','user_groups_model','user_position_model'));
+         $this->load->model(array('promo_model','user_model','user_groups_model','user_position_model','group_model'));
          
     }
     
@@ -38,13 +38,15 @@ class User extends Admin_controller {
                     <span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
                     </span>
-                   </a>
-                   <button class="btn btn-info btn-action" data-toggle="modal" data-target="#participant_lists" onclick="get_participants_lists({id})"> 
-                      <img src="'.base_url().'assets/admin/images/participants.png" class="img-responsive m-menu" alt="participants"> 
-                    </button>
-                    <button class="btn btn-info btn-action" data-toggle="modal" data-target="#uiModal" onclick="assign_user({id})">
-                      <img src="'.base_url().'assets/admin/images/promo-code.png" class="img-responsive m-menu" alt="promo code"> 
-                    </button>';
+                   </a>';
+                   /**
+                     * <button class="btn btn-info btn-action" data-toggle="modal" data-target="#participant_lists" onclick="get_participants_lists({id})"> 
+                     *                       <img src="'.base_url().'assets/admin/images/participants.png" class="img-responsive m-menu" alt="participants"> 
+                     *                     </button>
+                     *                     <button class="btn btn-info btn-action" data-toggle="modal" data-target="#uiModal" onclick="assign_user({id})">
+                     *                       <img src="'.base_url().'assets/admin/images/promo-code.png" class="img-responsive m-menu" alt="promo code"> 
+                     *                     </button>
+                     */
                     
         $this->listing->initialize(array('listing_action' => $str));
 
@@ -243,7 +245,7 @@ class User extends Admin_controller {
     }
     
     //delete group user
-    function delete_group_user($user_id,$group_id)
+    function delete_group_user($user_id,$group_id,$usertype)
     {
         $user_id  = $this->input->post('user_id');
         $group_id = $this->input->post('group_id');

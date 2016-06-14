@@ -13,7 +13,7 @@
                             <li class="active"><a href="#tab1primary" data-toggle="tab">View User</a></li>
                             <li><a href="#tab2primary" data-toggle="tab">HMGPS Account</a></li>
                             <li><a href="#tab3primary" data-toggle="tab">Contacts</a></li>
-                            <li><a href="#tab4primary" onclick="assign_user(<?php echo $this->uri->segment(4);?>)" data-toggle="tab">My Promo</a></li>
+                            <li><a href="#tab4primary" onclick="assign_user(<?php echo $this->uri->segment(4);?>)" data-toggle="tab">My Promos</a></li>
                             <li><a href="#tab5primary" data-toggle="tab">Payment</a></li>
                             <li><a href="#tab6primary" data-toggle="tab">Reset Password</a></li>
                         </ul>
@@ -119,7 +119,7 @@
                             Contacts
                         </div>
                         <div class="tab-pane fade" id="tab4primary">  
-                            My Promo
+                            My Promos
                         </div>
                         <div class="tab-pane fade" id="tab5primary">
                             Payment
