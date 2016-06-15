@@ -653,6 +653,7 @@ class Service extends REST_Controller
 		}
      
         $user_id = $this->get('user_id');
+        $map_type = $this->get('map_type');
         
         $result = $this->db->get_where('user_position',array('user_id' => $user_id))->num_rows();
                
@@ -664,6 +665,7 @@ class Service extends REST_Controller
         $ins_data['speed']   = $this->get('speed');
         $ins_data['bearing'] = $this->get('bearing');
         $ins_data['accuracy']= $this->get('accuracy');
+        
 
         if($result > 0) {
            // $ins_data['date_updated'] = strtotime(date('Y-m-d H:i:s'));
@@ -683,6 +685,9 @@ class Service extends REST_Controller
             //update map last seen time
             $up_data = array();
             $up_data['last_seen_time'] = date("Y-m-d H:i:s");
+            if(($latt != 0 && $lon != 0) && ($map_type == 'manual')) {
+                $up_data['is_visible']     = 0;
+            }
             $this->user_groups_model->update($up_data,array("user_id" => $user_id,"status" => 1));
             
         }

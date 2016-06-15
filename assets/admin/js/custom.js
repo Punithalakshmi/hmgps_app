@@ -154,6 +154,7 @@ function res_password(user_id)
           success: function(res){
             if(res.status == 'success') {
                 $(".pass_success").html("Password Successfully reset.");
+                location.reload();
             }
           },
           error: function(e) {

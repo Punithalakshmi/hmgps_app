@@ -502,16 +502,48 @@ class REST_Controller extends CI_Controller {
 	protected function _log_request($authorized = FALSE)
 	{
 	  
-		return $this->rest->db->insert(config_item('rest_logs_table'), array(
-			'uri' => $this->uri->uri_string(),
-			'method' => $this->request->method,
-			'params' => serialize($this->_args),
-			'api_key' => isset($this->rest->key) ? $this->rest->key : '',
-			'ip_address' => $this->input->ip_address(),
-			'time' => function_exists('now') ? now() : time(),
-			'authorized' => $authorized
-		));
+		/**
+         * return $this->rest->db->insert(config_item('rest_logs_table'), array(
+         * 			'uri' => $this->uri->uri_string(),
+         * 			'method' => $this->request->method,
+         * 			'params' => serialize($this->_args),
+         * 			'api_key' => isset($this->rest->key) ? $this->rest->key : '',
+         * 			'ip_address' => $this->input->ip_address(),
+         * 			'time' => function_exists('now') ? now() : time(),
+         * 			'authorized' => $authorized
+         * 		));
+         */
      
+     
+           $appkeyy = $this->rest->key;
+         
+           $uri = $this->uri->uri_string();
+    	  
+           $res = $this->rest->db->query("select * from api_logs where api_key='".$appkeyy."'")->row_array(); 
+            
+            if(count($res)) {
+                return $this->rest->db->update(config_item('rest_logs_table'), array(
+        			'uri' => $this->uri->uri_string(),
+        			'method' => $this->request->method,
+        			'params' => serialize($this->_args),
+        			'api_key' => isset($this->rest->key) ? $this->rest->key : '',
+        			'ip_address' => $this->input->ip_address(),
+        			'time' => function_exists('now') ? now() : time(),
+        			'authorized' => $authorized
+    		   ),array("api_key" => $this->rest->key));
+            }
+    	    else
+            {
+    		  return $this->rest->db->insert(config_item('rest_logs_table'), array(
+    			'uri' => $this->uri->uri_string(),
+    			'method' => $this->request->method,
+    			'params' => serialize($this->_args),
+    			'api_key' => isset($this->rest->key) ? $this->rest->key : '',
+    			'ip_address' => $this->input->ip_address(),
+    			'time' => function_exists('now') ? now() : time(),
+    			'authorized' => $authorized
+    		  ));
+           }          
 	}
 
 	/*
