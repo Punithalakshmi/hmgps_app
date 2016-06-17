@@ -11,13 +11,11 @@ function generate_promo()
          // data: {},
           success: function(res){
            $("#promo_code").val(res);
-            
           },
           error: function(e) {
-            	console.log(e.message);
-                
-             }
-        });
+         	console.log(e.message);    
+          }
+       });
 }
 
 function assign_user(id){
