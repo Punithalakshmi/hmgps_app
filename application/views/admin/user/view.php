@@ -2,10 +2,8 @@
 <div class="inner" style="min-height: 700px;">
 <div class="container">
     <div class="page-header">
-        
     </div>
     <div class="row">
-    	
         <div class="col-md-12">
             <div class="panel with-nav-tabs panel-primary">
                 <div class="panel-heading">
@@ -72,7 +70,9 @@
                                             <input type="radio" name="update_user_status" style="margin-left: 15px;" value="1" <?php echo ($form_data['user_status'] == 1)?'checked=checked':"";?> />Active
                                             <input type="radio" name="update_user_status" value="2" <?php echo ($form_data['user_status'] == 2)?'checked=checked':"";?> />In Active
                                             <input type="radio" type="" name="update_user_status" value="3" <?php echo ($form_data['user_status'] == 3)?'checked=checked':"";?> />Flag
-                                            <input type="radio" type="" name="update_user_status" value="4" <?php echo ($form_data['user_status'] == 4)?'checked=checked':"";?> />Blocked By
+                                            <input type="radio" type="" name="update_user_status" value="4" <?php echo ($form_data['user_status'] == 4)?'checked=checked':"";?> />Unflag
+                                            <input type="radio" type="" name="update_user_status" value="5" <?php echo ($form_data['user_status'] == 5)?'checked=checked':"";?> />Block
+                                            <input type="radio" type="" name="update_user_status" value="6" <?php echo ($form_data['user_status'] == 6)?'checked=checked':"";?> />Un Block
                                             <input type="submit" type="" name="user_status" class="btn btn-primary" style="margin-left: 20px; margin-bottom: 5px;" value="UPDATE" />
                                           </form>
                                         </div>
@@ -160,9 +160,7 @@
              <div class="clearfix" style="margin-top: 20px;"></div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <div id="group_participants_lists">
-                            
-                        </div>
+                        <div id="group_participants_lists"></div>
                     </div>
                 </div>
                 </div>
@@ -234,10 +232,10 @@
                 <div class="col-lg-12">
                     <h5><b>UPDATE USER STATUS</b></h5>
                     <div class="row">
-                      <form name="update_user_status" method="post" action="<?php echo base_url();?>admin/user/add/<?php echo $this->uri->segment(4);?>">
+                      <form name="update_user_status" method="post" action="<?php //echo base_url();?>admin/user/add/<?php echo $this->uri->segment(4);?>">
                         <input type="radio" name="update_user_status" style="margin-left: 15px;" value="1" <?php echo ($form_data['user_status'] == 1)?'checked=checked':"";?> />Active
-                        <input type="radio" name="update_user_status" value="2" <?php echo ($form_data['user_status'] == 2)?'checked=checked':"";?> />In Active
-                        <input type="radio" type="" name="update_user_status" value="3" <?php echo ($form_data['user_status'] == 3)?'checked=checked':"";?> />Flag
+                        <input type="radio" name="update_user_status" value="2" <?php //echo ($form_data['user_status'] == 2)?'checked=checked':"";?> />In Active
+                        <input type="radio" type="" name="update_user_status" value="3" <?php //echo ($form_data['user_status'] == 3)?'checked=checked':"";?> />Flag
                         <input type="submit" type="" name="user_status" class="btn btn-primary" style="margin-left: 20px; margin-bottom: 5px;" value="UPDATE" />
                       </form>
                     </div>
