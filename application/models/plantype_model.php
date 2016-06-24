@@ -24,6 +24,12 @@ class Plantype_Model extends App_model {
                 case 'name':
                     $this->db->like($key, $value);
                 break;
+                case 'cost':
+                    $this->db->like($key, $value);
+                break;
+                case 'type':
+                    $this->db->like($key, $value);
+                break;
             }
         }
         

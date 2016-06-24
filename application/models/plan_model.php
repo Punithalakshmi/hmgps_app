@@ -24,6 +24,9 @@ class Plan_Model extends App_model {
                 case 'planname':
                     $this->db->like($key, $value);
                 break;
+                case 'validity':
+                    $this->db->like($key, $value);
+                break;
             }
         }
         
