@@ -3,6 +3,10 @@ safe_include("controllers/admin/admin_controller.php");
 class User extends Admin_controller {
     
     protected $_user_validation_rules = array(array('field' => 'update_user_status', 'label' => 'Status', 'rules' => 'trim|required'));
+    protected $_notification_validation_rules = array(  array('field' => 'title', 'label' => 'Title', 'rules' => 'trim|required'),
+                                                        array('field' => 'message', 'label' => 'Message', 'rules' => 'trim|required|max_length[255]'),
+                                                        array('field' => 'description', 'label' => 'Description', 'rules' => 'trim|required|max_length[255]')
+                                                      );
     protected $api_url = 'http://localhost/hmgps_app/service/';
 	protected $service_param = array('X-APP-KEY'=>'myGPs~@!');
     
@@ -169,7 +173,7 @@ class User extends Admin_controller {
         
         $promo_cnt = $promo_count['cnt'];
         
-            if($used_promo_count < $number_of_user_to_use) {
+            if(($promo_cnt < $number_of_time_to_use) && ($used_promo_count < $number_of_time_to_use)) {
                 $this->db->query("insert into user_promos set user_id='".$user_id."', promo_id='".$promo_id."',assign_date='".date("Y-m-d")."'"); 
                 $this->db->query("update user set last_assigned_promo='".$promo_id."', participant_count='".$number_of_time_to_use['participant_count']."' where id='".$user_id."'");
                 $this->promos($user_id);
@@ -204,19 +208,25 @@ class User extends Admin_controller {
         
         $this->load->library("GCM");
         
-        $form = $this->input->post();
-      
-        $gcm_data = array();
-        $gcm_data['title']       = $form['title'];
-        $gcm_data['message']     = $form['message'];
-        $gcm_data['description'] = $form['description'];
+        $this->form_validation->set_rules($this->_notification_validation_rules);
+       
+       if($this->form_validation->run()) { 
+                
+            $form = $this->input->post();
+          
+            $gcm_data = array();
+            $gcm_data['title']       = $form['title'];
+            $gcm_data['message']     = $form['message'];
+            $gcm_data['description'] = $form['description'];
+            
+            //gcm_id
+            $user = $this->user_model->check_unique(array("id" => $form['notify_user_id']));
+            
+            $this->gcm->send_notification(array($gcm_id),array("hmg" => $gcm_data));
+            
+            redirect("admin/user");
         
-        //gcm_id
-        $user = $this->user_model->check_unique(array("id" => $form['notify_user_id']));
-        
-        $this->gcm->send_notification(array($gcm_id),array("hmg" => $gcm_data));
-        
-        redirect("admin/user");
+        }
     }
     
     function group_participant_lists()

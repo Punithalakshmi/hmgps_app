@@ -5,7 +5,7 @@ class Plantype extends Admin_controller {
     
     protected $_plantype_validation_rules = array(
                                                 array('field' => 'name', 'label' => 'Name', 'rules'=> 'trim|required'),
-                                                array('field' => 'cost', 'label' => 'Plan Cost', 'rules'=> 'trim|required'),
+                                                array('field' => 'cost', 'label' => 'Plan Cost', 'rules'=> 'trim|required|callback_plan_cost_check'),
                                                 array('field' => 'type', 'label' => 'Type', 'rules'=> 'trim|required')
                                                );
     
@@ -137,5 +137,15 @@ class Plantype extends Admin_controller {
             $this->service_message->set_flash_message('record_delete_success');
             return true;    
         }
+    }
+    
+    //check validation for plan cost if zero or null
+    function plan_cost_check($str)
+    {
+        if($str == 0) {
+             $this->form_validation->set_message('plan_cost_check', 'Plan Cost Should be Greater than 0');
+             return FALSE; 
+        }
+       	return TRUE;
     }
 }    

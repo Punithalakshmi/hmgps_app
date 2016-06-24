@@ -25,7 +25,6 @@
                         <label class="control-label">Select Plans</label>
                         <br />
                         <select name="plan_id" class="form-control">
-                            <option value="select">Plans</option>
                             <?php  if(count($form_data['plans'])) {
                                     foreach($form_data['plans'] as $pkey => $pvalue){
                               ?>          

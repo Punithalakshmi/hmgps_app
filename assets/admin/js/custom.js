@@ -56,7 +56,7 @@ function assign_promo()
             }
             else
             {
-                $("#uiModal #msg").html(res.msg);
+                $("#tab4primary #msg").html(res.msg);
             }
           },
           error: function(e) {

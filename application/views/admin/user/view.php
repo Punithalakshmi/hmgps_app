@@ -96,8 +96,8 @@
                                                     <td><?php echo $cvalue['jkey'];?></td>
                                                     <td><?php echo $cvalue['type'];?></td>
                                                     <td><?php if($cvalue['guser'] == $cvalue['uguser']) {echo "Owner";}else{echo "Joined User";} ?></td>
-                                                    <td><a onclick="delete_group_user(<?php echo $cvalue['uguser'];?>,<?php echo $cvalue['group_id'];?>,'<?php echo $usertype; ?>');"><img src="<?php echo site_url();?>assets/admin/images/delete.png" width="20" height="20" /></a>
-                                                    <button class="btn btn-info btn-action" data-toggle="modal" data-target="#participant_lists" onclick="get_participants_lists(<?php echo $cvalue['group_id'];?>)"> 
+                                                    <td><a title="Delete User From this Channel" onclick="delete_group_user(<?php echo $cvalue['uguser'];?>,<?php echo $cvalue['group_id'];?>,'<?php echo $usertype; ?>');"><img src="<?php echo site_url();?>assets/admin/images/delete.png" width="20" height="20" /></a>
+                                                    <button title="Channel Participants Lists" class="btn btn-info btn-action" data-toggle="modal" data-target="#participant_lists" onclick="get_participants_lists(<?php echo $cvalue['group_id'];?>)"> 
                                                           <img src="<?php echo base_url();?>assets/admin/images/participants.png" class="img-responsive m-menu" alt="participants" /> 
                                                         </button>
                                                     </td>

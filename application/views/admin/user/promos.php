@@ -1,3 +1,4 @@
+<span id="msg" style="font-size:18px; color:#218c92;font-weight:bold;"></span>
 <table class="table user-list table-hover" style="height:10px !important;">
 <thead>
     <th>Promo Code</th>
